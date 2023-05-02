@@ -55,7 +55,10 @@ var queryable = db
     {
         Id = x.Id,
         Name = x.Name,
-        Child = x.Child == null ? null : new ChildDto
+        Child =
+            // Comment-out the line below to avoid bug 
+            x.Child == null ? null : 
+        new ChildDto
         {
             Id = x.Child.Id,
             Name = x.Child.Name,
@@ -70,7 +73,7 @@ var queryable = db
                 .ToList(),
         }
     })
-    .Where(x => x.Child != null && x.Child.GrandChildren.Any(g => g.Name == "grand child 2.1.1"));
+    .Where(x => x.Child.GrandChildren.Any(g => g.Name == "grand child 2.1.1"));
 
 var parentDtos = await queryable.ToListAsync();
 
